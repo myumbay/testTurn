@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TurnoController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<h1>TURNERO</h1>
+{% for message in app.flashes('exito') %}
+    <div class="flash-notice">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{{ form_start(formulario, {'attr': {'class': 'form-inline'}}) }}
+  <div class="form-group row">
+    {{ form_label(formulario.ruc, 'Id') }}
+    <div class="col-sm-10">
+      {{ form_widget(formulario.ruc, {'attr': {'class': 'task_field'}}) }}
+    </div>
+  </div>
+  <div class="form-group row">
+    {{ form_label(formulario.nombre, 'Nombre') }}
+    <div class="col-sm-10">
+      {{ form_widget(formulario.nombre, {'attr': {'class': 'task_field'}}) }}
+    </div>
+  </div>
+
+{{ form_end(formulario) }}
+
+<h1>Lista de usuarios en espera</h1>
+<table>
+<tr>
+<th colspan='1'> Turno </th>
+<th> Fecha</th>
+</tr>
+
+{% for turno in result %}
+	<tr>
+	<td colspan='2'>
+		{% if (turno.tipoTurno=='2') %}
+		Cola 2
+		{%else%}
+		Cola 3
+		{%endif%}
+	</td>
+	<td>
+		{{turno.created|date("Y-m-d H:i:s")}}
+	</td>
+	</tr>
+ {% endfor %}
+
+{% endblock %}
