@@ -14,7 +14,7 @@ use App\Form\PersonaType;
 class TurnoController extends AbstractController
 {
     /**
-     * @Route("/turno", name="turno")
+     * @Route("/", name="turno")
      */
     public function index(request $request): Response
     {
@@ -62,9 +62,9 @@ class TurnoController extends AbstractController
 			}
 			
 			$hoy = new \DateTime('now');
-			$article = $em->getRepository('App:Persona')->find($lastid);
+			$p = $em->getRepository('App:Persona')->find($lastid);
 			$turno = new Turno();
-			$turno->setPersona($article);
+			$turno->setPersona($p);
 			$turno->setCreated($hoy);
 			$turno->setTipoTurno($tipoturno);
 			$turno->setEstado('1');
@@ -80,4 +80,18 @@ class TurnoController extends AbstractController
 			'formulario'=>$form->createView(),'result'=>$results
         ]);
     }
+	 /**
+     * @Route("/cambioestado", name="cambioestado")
+     */
+    public function cambioEstado(request $request): Response
+	{
+		$id=$request->query->get('id');
+		$em=$this->getDoctrine()->getManager();
+		$turno = $em->getRepository('App:Turno')->find($id);
+		$turno->setEstado(0);
+		$em->persist($turno);
+		$em->flush();
+		
+		return $this->redirectToRoute('turno');
+	}
 }

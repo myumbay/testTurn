@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TurnoController!{% endblock %}
+{% block title %}
+{{parent()}} 
+{% endblock %}
 
 {% block body %}
 <style>
@@ -36,6 +38,7 @@
 <tr>
 <th colspan='1'> Turno </th>
 <th> Fecha</th>
+<th> Acciones</th>
 </tr>
 
 {% for turno in result %}
@@ -48,7 +51,14 @@
 		{%endif%}
 	</td>
 	<td>
-		{{turno.created|date("Y-m-d H:i:s")}}
+		{{turno.created|date("Y-m-d H:i:s")}} 		
+	</td>
+	
+		
+		<td>
+		<a href="{{ path('cambioestado',{'id':turno.id}) }}" class="btn btn-primary" role="button">Atender</a>
+
+		</td>
 	</td>
 	</tr>
  {% endfor %}
