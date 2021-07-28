@@ -55,9 +55,10 @@ class TurnoController extends AbstractController
 			
 			}
 			$tipoturno='2';$cola='Cola 1';
-			if($sumturno2>$sumturno3){
-				$tipoturno='3';
-				$cola='Cola 2';
+			if ($sumturno3==0)$sumturno3=3;
+			if($sumturno2>$sumturno3  ){	
+				$tipoturno='3'; $cola='Cola 2';
+				
 			}
 			
 			$hoy = new \DateTime('now');
